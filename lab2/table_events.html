@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4 – Table Selection & Events</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        table { border-collapse: collapse; width: 60%; }
+        td, th { border: 1px solid black; padding: 8px; }
+        .oddRow { background-color: #f0f0f0; }
+    </style>
+</head>
+
+<body>
+
+<h1>Exercise 4 – Table Selection & Event Handling</h1>
+
+<table id="myTable">
+    <tr><th>Name</th><th>Age</th></tr>
+    <tr><td>Alice</td><td>22</td></tr>
+    <tr><td>Bob</td><td>30</td></tr>
+    <tr><td>Chris</td><td>25</td></tr>
+    <tr><td>Diana</td><td>28</td></tr>
+    <tr><td>Eric</td><td>35</td></tr>
+</table>
+
+<button id="hideOdd">Hide Odd Rows</button>
+<button id="showOdd">Show Odd Rows</button>
+
+<script>
+$(document).ready(function () {
+
+    // Select odd rows and style them
+    $("#myTable tr:odd").addClass("oddRow");
+
+    $("#hideOdd").click(function () {
+        $("#myTable tr:odd").hide();
+    });
+
+    $("#showOdd").click(function () {
+        $("#myTable tr:odd").show();
+    });
+
+    // Hide clicked row
+    $("#myTable tr").click(function () {
+        $(this).hide();
+    });
+
+});
+</script>
+
+</body>
+</html>
