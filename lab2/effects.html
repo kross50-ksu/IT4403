@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 5 – jQuery Effects</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+<h1>Exercise 5 – jQuery Visual Effects</h1>
+
+<div id="box" style="width:200px;height:100px;background:lightblue;text-align:center;padding-top:40px;">
+    Effects Box
+</div>
+
+<button id="hide">Hide</button>
+<button id="show">Show</button>
+<button id="toggle">Toggle</button>
+<button id="fade">Fade</button>
+<button id="slide">Slide</button>
+
+<script>
+$(document).ready(function () {
+
+    $("#hide").click(function () {
+        $("#box").hide();
+    });
+
+    $("#show").click(function () {
+        $("#box").show();
+    });
+
+    $("#toggle").click(function () {
+        $("#box").toggle();
+    });
+
+    $("#fade").click(function () {
+        $("#box").fadeToggle();
+    });
+
+    $("#slide").click(function () {
+        $("#box").slideToggle();
+    });
+
+});
+</script>
+
+</body>
+</html>
