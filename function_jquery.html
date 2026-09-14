@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Functions</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        function createList() {
+            let level = 5;
+            let ul = $("<ul></ul>");
+            for (let i = 1; i <= level; i++) {
+                ul.append(`<li>${i}</li>`);
+            }
+            $("#output").append(ul);
+        }
+
+        function createList2(level, type) {
+            let list = $(`<${type}></${type}>`);
+            for (let i = 1; i <= level; i++) {
+                list.append(`<li>${i}</li>`);
+            }
+            $("#output").append(list);
+        }
+
+        $(function () {
+            createList();
+            createList2(10, "ol");
+        });
+    </script>
+</head>
+
+<body>
+<h1>jQuery Functions</h1>
+<p>This example shows jQuery-based list creation.</p>
+
+<div id="output"></div>
+</body>
+</html>
