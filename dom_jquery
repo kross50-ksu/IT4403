@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery DOM Access</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+<h1>HTML DOM (jQuery Version)</h1>
+<p>This example shows how to access HTML parts using jQuery.</p>
+<hr>
+
+<a id="w3clink" href="http://www.w3.org/">
+    <img id="w3cimg" src="http://www.w3.org/2008/site/images/logo-w3c-screen-lg">
+    W3C
+</a>
+
+<h3>Output</h3>
+<div id="output"></div>
+
+<script>
+    $(function () {
+        $("#output").append("<b>The link's innerText: </b>" + $("#w3clink").text() + "<br>");
+        $("#output").append("<b>The link's innerHTML: </b>" + $("#w3clink").html() + "<br>");
+        $("#output").append("<b>The link's href attribute: </b>" + $("#w3clink").attr("href") + "<br>");
+        $("#output").append("<b>The img's src attribute: </b>" + $("#w3cimg").attr("src") + "<br>");
+    });
+</script>
+
+</body>
+</html>
