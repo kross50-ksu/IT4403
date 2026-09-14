@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 3 – jQuery Selectors, DOM, CSS</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+<h1 id="mainHeading">Selectors, DOM, and CSS</h1>
+
+<p class="info">Paragraph with class "info".</p>
+<p class="info">Another paragraph with class "info".</p>
+<p id="special">Paragraph with ID "special".</p>
+
+<ul id="myList">
+    <li>Item 1</li>
+    <li class="highlight">Item 2</li>
+    <li>Item 3</li>
+</ul>
+
+<button id="readText">Read Text</button>
+<button id="changeText">Change Text</button>
+<button id="readAttr">Read Attribute</button>
+<button id="changeAttr">Change Attribute</button>
+<button id="hideEl">Hide Element</button>
+<button id="showEl">Show Element</button>
+<button id="toggleEl">Toggle Element</button>
+<button id="cssChange">Change CSS</button>
+
+<div id="output"></div>
+
+<script>
+$(document).ready(function () {
+
+    $("#readText").click(function () {
+        $("#output").text("Heading text: " + $("#mainHeading").text());
+    });
+
+    $("#changeText").click(function () {
+        $("#special").text("This text was changed using jQuery!");
+    });
+
+    $("#readAttr").click(function () {
+        $("#output").text("List ID: " + $("#myList").attr("id"));
+    });
+
+    $("#changeAttr").click(function () {
+        $("#myList").attr("title", "This is a list");
+        $("#output").text("Added title attribute to list.");
+    });
+
+    $("#hideEl").click(function () {
+        $("#special").hide();
+    });
+
+    $("#showEl").click(function () {
+        $("#special").show();
+    });
+
+    $("#toggleEl").click(function () {
+        $("#special").toggle();
+    });
+
+    $("#cssChange").click(function () {
+        $("#special").css({
+            "background-color": "yellow",
+            "color": "red",
+            "font-size": "20px",
+            "border": "2px solid black",
+            "padding": "10px"
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>
