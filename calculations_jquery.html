@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Calculations</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+<h1>Calculations (jQuery)</h1>
+<p>This example shows basic arithmetic using jQuery.</p>
+
+<div id="result"></div>
+
+<script>
+    $(function () {
+        let x = 10;
+        let y = 4.5;
+        let result1 = x + y;
+
+        $("#result").append(`<p>x=${x}, y=${y}</p>`);
+        $("#result").append(`<p>x + y = ${result1}</p>`);
+        $("#result").append(`<p>x - y = ${x - y}</p>`);
+        $("#result").append(`<p>x * y = ${x * y}</p>`);
+        $("#result").append(`<p>x / y = ${x / y}</p>`);
+    });
+</script>
+
+</body>
+</html>
