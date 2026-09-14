@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Loop Example</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+<h1>Iteration Control Flow (jQuery)</h1>
+<h2>for loop</h2>
+
+<div id="output"></div>
+
+<script>
+    $(function () {
+        let level = 5;
+        let ul = $("<ul></ul>");
+
+        for (let i = 0; i < level; i++) {
+            ul.append(`<li>List item ${i}</li>`);
+        }
+
+        $("#output").append(ul);
+    });
+</script>
+
+</body>
+</html>
