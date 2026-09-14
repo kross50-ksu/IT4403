@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 6 – jQuery Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+<h1>Exercise 6 – jQuery Calculator Application</h1>
+
+<input type="text" id="num1" placeholder="Number 1">
+<input type="text" id="num2" placeholder="Number 2">
+
+<select id="operation">
+    <option value="+">Addition (+)</option>
+    <option value="-">Subtraction (-)</option>
+    <option value="*">Multiplication (*)</option>
+    <option value="/">Division (/)</option>
+</select>
+
+<br><br>
+
+<input type="text" id="color" placeholder="Result Color (e.g., red)">
+<button id="calcBtn">Calculate</button>
+
+<h2 id="result"></h2>
+
+<script>
+$(document).ready(function () {
+
+    $("#calcBtn").click(function () {
+
+        let n1 = $("#num1").val();
+        let n2 = $("#num2").val();
+        let op = $("#operation").val();
+        let color = $("#color").val();
+
+        if (n1 === "" || n2 === "") {
+            $("#result").text("Error: Both fields must be filled.").css("color", "red");
+            return;
+        }
+
+        if (isNaN(n1) || isNaN(n2)) {
+            $("#result").text("Error: Inputs must be valid numbers.").css("color", "red");
+            return;
+        }
+
+        n1 = parseFloat(n1);
+        n2 = parseFloat(n2);
+
+        if (op === "/" && n2 === 0) {
+            $("#result").text("Error: Cannot divide by zero.").css("color", "red");
+            return;
+        }
+
+        let answer = eval(n1 + op + n2);
+
+        $("#result").text("Result: " + answer).css("color", color || "black");
+
+    });
+
+});
+</script>
+
+</body>
+</html>
