@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>jQuery CSS Manipulation</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        function getRandomColor() {
+            let r = Math.floor(Math.random() * 255);
+            let g = Math.floor(Math.random() * 255);
+            let b = Math.floor(Math.random() * 255);
+            return `rgb(${r},${g},${b})`;
+        }
+
+        function changeColor() {
+            $("#result").css("background-color", getRandomColor());
+        }
+
+        function changeSize() {
+            let h = Math.floor(Math.random() * 100) + 50;
+            let w = Math.floor(Math.random() * 200) + 200;
+            $("#result").css({ height: h + "px", width: w + "px" });
+        }
+
+        function changeBorder() {
+            let w = Math.floor(Math.random() * 20) + 5;
+            $("#result").css({
+                "border-width": w + "px",
+                "border-color": getRandomColor()
+            });
+        }
+
+        function changeStyle() {
+            changeColor();
+            changeSize();
+            changeBorder();
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Change CSS styles using jQuery</h2>
+
+    <button onclick="changeStyle()">Change Style</button>
+    <br><br>
+    <button onclick="changeColor()">Change Color</button>
+    <button onclick="changeSize()">Change Size</button>
+    <button onclick="changeBorder()">Change Border</button>
+
+    <h1 id="result" style="border:solid; text-align:center">Welcome</h1>
+</body>
+</html>
