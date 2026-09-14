@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 2 – jQuery ready() & Event Handling</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+<h1>Exercise 2 – jQuery ready() and Event Handling</h1>
+
+<p id="p1">This is paragraph 1.</p>
+<p id="p2">This is paragraph 2.</p>
+
+<button id="btn1">Hide Paragraph 1</button>
+<button id="btn2">Hide Paragraph 2</button>
+
+<script>
+$(document).ready(function () {
+
+    // Part A: Hide both paragraphs
+    // $("#btn1, #btn2").click(function () {
+    //     $("p").hide();
+    // });
+
+    // Part B: Hide individually
+    $("#btn1").click(function () {
+        $("#p1").hide();
+    });
+
+    $("#btn2").click(function () {
+        $("#p2").hide();
+    });
+
+});
+</script>
+
+</body>
+</html>
