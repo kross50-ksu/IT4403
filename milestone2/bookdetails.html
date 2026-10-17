@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book Details</title>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+img{
+    width:250px;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="bookshelf.html">My Bookshelf</a>
+</nav>
+
+<h1>Book Details</h1>
+
+<div id="details"></div>
+
+<script>
+
+const params =
+new URLSearchParams(window.location.search);
+
+const workId =
+params.get("workId");
+
+if(!workId){
+
+    $("#details").html(
+        "<p>No Work ID provided.</p>"
+    );
+
+}
+else{
+
+    $.getJSON(
+        `https://openlibrary.org/works/${workId}.json`,
+
+        function(book){
+
+            let description =
+            "Description not available";
+
+            if(typeof book.description === "string"){
+
+                description =
+                book.description;
+
+            }
+            else if(book.description &&
+                    book.description.value){
+
+                description =
+                book.description.value;
+            }
+
+            let subjects = "";
+
+            if(book.subjects){
+
+                subjects =
+                book.subjects
+                .slice(0,10)
+                .join(", ");
+            }
+
+            let cover = "";
+
+            if(book.covers &&
+                book.covers.length > 0){
+
+                cover =
+                `<img src="https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg"
+                      alt="${book.title} cover">`;
+            }
+
+            $("#details").html(`
+
+                ${cover}
+
+                <h2>${book.title}</h2>
+
+                <p>
+                    <strong>Work ID:</strong>
+                    ${workId}
+                </p>
+
+                <p>
+                    <strong>Description:</strong><br>
+                    ${description}
+                </p>
+
+                <p>
+                    <strong>Subjects:</strong><br>
+                    ${subjects || "Not Available"}
+                </p>
+
+                <p>
+                    <a target="_blank"
+                    href="https://openlibrary.org/works/${workId}">
+                    View on Open Library
+                    </a>
+                </p>
+
+            `);
+
+        }
+
+    );
+
+}
+
+</script>
+
+</body>
+</html>
