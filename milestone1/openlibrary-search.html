@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Open Library Search Results</title>
+
+https://code.jquery.com/jquery-3.7.1.min.jsscript>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.book{
+    background:white;
+    margin-bottom:20px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.book img{
+    width:150px;
+    margin-bottom:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Modern Web Search Results</h1>
+
+<div id="results"></div>
+
+<script>
+
+$(function(){
+
+    $.getJSON("openlibrary-search.json", function(data){
+
+        data.docs.forEach(function(book){
+
+            let cover = "";
+
+            if(book.cover_i){
+
+                cover = `
+                <img
+                    src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg"
+                    alt="Cover for ${book.title}">
+                `;
+            }
+            else{
+
+                cover = "<p>No Cover Available</p>";
+
+            }
+
+            $("#results").append(`
+
+                <div class="book">
+
+                    ${cover}
+
+                    <h2>${book.title || "Not Available"}</h2>
+
+                    <p>
+                        <strong>Author(s):</strong>
+                        ${
+                          book.author_name
+                          ? book.author_name.join(", ")
+                          : "Not Available"
+                        }
+                    </p>
+
+                    <p>
+                        <strong>First Published:</strong>
+                        ${book.first_publish_year || "Not Available"}
+                    </p>
+
+                    <p>
+                        <strong>Edition Count:</strong>
+                        ${book.edition_count || "Not Available"}
+                    </p>
+
+                    <p>
+                        <strong>Ebook Access:</strong>
+                        ${book.ebook_access || "Not Available"}
+                    </p>
+
+                    <p>
+                        <strong>Language:</strong>
+                        ${
+                            book.language
+                            ? book.language.join(", ")
+                            : "Not Available"
+                        }
+                    </p>
+
+                    <p>
+                        <strong>Full Text Available:</strong>
+                        ${book.has_fulltext ? "Yes" : "No"}
+                    </p>
+
+                    <p>
+                        <a href="https://openlibrary.org${book.key}"
+                           target="_blank">
+                           View Open Library Record
+                        </a>
+                    </p>
+
+                </div>
+
+            `);
+
+        });
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
