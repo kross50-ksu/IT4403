@@ -1,121 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Book Details</title>
+    <meta charset="UTF-8">
+    <title>Book Details</title>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="milestone2.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="milestone2.css">
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
+
 <body>
 
-<nav>
-    <a href="booksearch.html">Home</a>
-    <a href="bookshelf.html">My Bookshelf</a>
-</nav>
+    <header class="hero">
+        <h1>Book Details</h1>
+        <p>Detailed information retrieved from the Open Library API</p>
+    </header>
 
-<h1>Book Details</h1>
+    <nav class="navbar">
+        <a href="booksearch.html">Home</a>
+        <a href="bookshelf.html">My Bookshelf</a>
+    </nav>
 
-<div id="details"></div>
+    <main class="content">
 
-<script>
+        <div id="details" class="details-card">
+            <p>Loading book details...</p>
+        </div>
 
-const params =
-new URLSearchParams(window.location.search);
+    </main>
 
-const workId =
-params.get("workId");
+    <footer>
+        <p>&copy; 2026 Khaliya Ross – IT 4403</p>
+    </footer>
 
-if(!workId){
+    <script>
 
-    $("#details").html(
-        "<p>No Work ID provided.</p>"
-    );
+        const params = new URLSearchParams(window.location.search);
+        const workId = params.get("workId");
 
-}
-else{
-
-    $.getJSON(
-        `https://openlibrary.org/works/${workId}.json`,
-
-        function(book){
-
-            let description =
-            "Description not available";
-
-            if(typeof book.description === "string"){
-
-                description =
-                book.description;
-
-            }
-            else if(book.description &&
-                    book.description.value){
-
-                description =
-                book.description.value;
-            }
-
-            let subjects = "";
-
-            if(book.subjects){
-
-                subjects =
-                book.subjects
-                .slice(0,10)
-                .join(", ");
-            }
-
-            let cover = "";
-
-            if(book.covers &&
-                book.covers.length > 0){
-
-                cover =
-                `<img src="https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg"
-                      alt="${book.title} cover">`;
-            }
+        if (!workId) {
 
             $("#details").html(`
-
-                ${cover}
-
-                <h2>${book.title}</h2>
-
-                <p>
-                    <strong>Work ID:</strong>
-                    ${workId}
-                </p>
-
-                <p>
-                    <strong>Description:</strong><br>
-                    ${description}
-                </p>
-
-                <p>
-                    <strong>Subjects:</strong><br>
-                    ${subjects || "Not Available"}
-                </p>
-
-                <p>
-                    <a target="_blank"
-                    href="https://openlibrary.org/works/${workId}">
-                    View on Open Library
-                    </a>
-                </p>
-
+                <div class="message">
+                    No Work ID was provided.
+                </div>
             `);
+
+        } else {
+
+            $.getJSON(
+                `https://openlibrary.org/works/${workId}.json`
+            )
+
+            .done(function(book) {
+
+                let description = "Description not available.";
+
+                if (typeof book.description === "string") {
+
+                    description = book.description;
+
+                } else if (
+                    book.description &&
+                    book.description.value
+                ) {
+
+                    description = book.description.value;
+                }
+
+                let subjects = "Not Available";
+
+                if (book.subjects) {
+
+                    subjects =
+                        book.subjects
+                        .slice(0, 10)
+                        .join(", ");
+                }
+
+                let cover = `
+                    <div class="message">
+                        No cover image available.
+                    </div>
+                `;
+
+                if (
+                    book.covers &&
+                    book.covers.length > 0
+                ) {
+
+                    cover = `
+                        <img
+                            src="https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg"
+                            alt="Cover image for ${book.title}">
+                    `;
+                }
+
+                $("#details").html(`
+
+                    ${cover}
+
+                    <h2>${book.title}</h2>
+
+                    <p>
+                        <strong>Work ID:</strong>
+                        ${workId}
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                    </p>
+
+                    <p>
+                        ${description}
+                    </p>
+
+                    <p>
+                        <strong>Subjects:</strong>
+                    </p>
+
+                    <p>
+                        ${subjects}
+                    </p>
+
+                    <p>
+                        <a
+                            href="https://openlibrary.org/works/${workId}"
+                            target="_blank">
+                            View Book on Open Library
+                        </a>
+                    </p>
+
+                `);
+
+            })
+
+            .fail(function() {
+
+                $("#details").html(`
+                    <div class="message">
+                        Unable to retrieve book information from Open Library.
+                    </div>
+                `);
+
+            });
 
         }
 
-    );
-
-}
-
-</script>
+    </script>
 
 </body>
 </html>
