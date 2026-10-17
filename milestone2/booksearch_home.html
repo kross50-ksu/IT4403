@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Open Library Book Search</title>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+nav{
+    margin-bottom:20px;
+}
+
+nav a{
+    margin-right:20px;
+}
+
+.book{
+    border:1px solid #ddd;
+    padding:15px;
+    margin:10px 0;
+    border-radius:8px;
+}
+
+img{
+    width:100px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="bookshelf.html">My Bookshelf</a>
+</nav>
+
+<h1>Book Search</h1>
+
+<input type="text" id="searchTerm" placeholder="Enter search term">
+<button id="searchBtn">Search</button>
+
+<br><br>
+
+<label>Page:</label>
+<select id="pageSelect"></select>
+
+<div id="results"></div>
+
+<script>
+
+const RESULTS_PER_PAGE = 10;
+let currentSearch = "";
+
+for(let i=1;i<=6;i++){
+    $("#pageSelect").append(
+        `<option value="${i}">Page ${i}</option>`
+    );
+}
+
+$("#searchBtn").click(function(){
+
+    currentSearch = $("#searchTerm").val().trim();
+
+    if(currentSearch === ""){
+        $("#results").html(
+            "<p>Please enter a search term.</p>"
+        );
+        return;
+    }
+
+    $("#pageSelect").val(1);
+
+    searchBooks(1);
+
+});
+
+$("#pageSelect").change(function(){
+
+    if(currentSearch !== ""){
+        searchBooks($(this).val());
+    }
+
+});
+
+function searchBooks(page){
+
+    let url =
+    `https://openlibrary.org/search.json?q=${encodeURIComponent(currentSearch)}&limit=${RESULTS_PER_PAGE}&page=${page}`;
+
+    $.getJSON(url,function(data){
+
+        $("#results").empty();
+
+        if(data.docs.length === 0){
+
+            $("#results").html(
+                "<p>No results found.</p>"
+            );
+
+            return;
+        }
+
+        data.docs.forEach(function(book){
+
+            let cover = "";
+
+            if(book.cover_i){
+
+                cover =
+                `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg"
+                      alt="${book.title} cover">`;
+            }
+
+            let workId =
+            book.key.replace("/works/","");
+
+            $("#results").append(`
+
+            <div class="book">
+
+                ${cover}
+
+                <h3>
+                    <a href="details.html?workId=${workId}">
+                        ${book.title}
+                    </a>
+                </h3>
+
+            </div>
+
+            `);
+
+        });
+
+    })
+    .fail(function(){
+
+        $("#results").html(
+            "<p>Search request failed.</p>"
+        );
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
