@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Open Library Book</title>
+
+https://code.jquery.com/jquery-3.7.1.min.jsscript>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+    background:#f4f4f4;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+img{
+    max-width:250px;
+    display:block;
+    margin-bottom:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Open Library Single Book</h1>
+
+<div id="bookInfo" class="card"></div>
+
+<script>
+$(function(){
+
+    $.getJSON("openlibrary-book.json", function(book){
+
+        let coverHTML = "No cover available";
+
+        if(book.covers && book.covers.length > 0 && book.covers[0] > 0){
+            coverHTML =
+            `<img
+                src="https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg"
+                alt="Cover image for ${book.title}">
+            `;
+        }
+
+        $("#bookInfo").html(`
+
+            ${coverHTML}
+
+            <h2>${book.title || "Not Available"}</h2>
+
+            <p><strong>Publisher:</strong>
+            ${book.publishers ? book.publishers.join(", ") : "Not Available"}</p>
+
+            <p><strong>Publish Date:</strong>
+            ${book.publish_date || "Not Available"}</p>
+
+            <p><strong>Pages:</strong>
+            ${book.number_of_pages || "Not Available"}</p>
+
+            <p><strong>ISBN-10:</strong>
+            ${book.isbn_10 ? book.isbn_10.join(", ") : "Not Available"}</p>
+
+            <p><strong>ISBN-13:</strong>
+            ${book.isbn_13 ? book.isbn_13.join(", ") : "Not Available"}</p>
+
+            <p><strong>Author Reference:</strong>
+            ${book.authors ? book.authors[0].key : "Not Available"}</p>
+
+            <p><strong>Illustrator:</strong>
+            ${book.contributions ? book.contributions.join(", ") : "Not Available"}</p>
+
+            <p><strong>Language:</strong>
+            ${book.languages ? book.languages[0].key : "Not Available"}</p>
+
+            <p><strong>First Sentence:</strong>
+            ${book.first_sentence ?
+              book.first_sentence.value :
+              "Not Available"}
+            </p>
+
+            <p><strong>Revision:</strong>
+            ${book.latest_revision || "Not Available"}</p>
+
+            <p>
+                <a href="https://openlibrary.org${book.key}"
+                   target="_blank">
+                   View Open Library Record
+                </a>
+            </p>
+
+        `);
+
+    });
+
+});
+</script>
+
+</body>
+</html>
