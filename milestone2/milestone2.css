@@ -1,1 +1,175 @@
+/* Global */
 
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f7f9fc;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Hero Header */
+
+.hero {
+    background: linear-gradient(135deg, #003366, #0055a5);
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* Navigation */
+
+.navbar {
+    background-color: white;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar a {
+    margin: 0 1rem;
+    color: #003366;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.navbar a:hover {
+    color: #0055a5;
+}
+
+/* Main Content */
+
+.content {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+/* Search Controls */
+
+.search-container {
+    margin-bottom: 2rem;
+}
+
+.search-container input {
+    width: 60%;
+    max-width: 500px;
+    padding: 0.75rem;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+.search-container button {
+    padding: 0.75rem 1rem;
+    margin-left: 0.5rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #003366;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.search-container button:hover {
+    background-color: #0055a5;
+}
+
+/* Page Dropdown */
+
+.pagination {
+    margin: 1rem 0 2rem 0;
+}
+
+.pagination select {
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+/* Book Cards */
+
+.book-card {
+    background: white;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.book-card h2,
+.book-card h3 {
+    color: #003366;
+    margin-top: 0;
+}
+
+.book-card a {
+    color: #003366;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.book-card a:hover {
+    color: #0055a5;
+    text-decoration: underline;
+}
+
+/* Book Covers */
+
+.book-card img,
+.details-card img {
+    width: 200px;
+    height: auto;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+/* Details Page */
+
+.details-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* Bookshelf Layout */
+
+.bookshelf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Messages */
+
+.message {
+    background-color: #eef3f8;
+    border-left: 4px solid #003366;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: white;
+    color: #333333;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 2rem;
+}
