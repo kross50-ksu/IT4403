@@ -1,78 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>My Bookshelf</title>
+    <meta charset="UTF-8">
+    <title>My Bookshelf</title>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="milestone2.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="milestone2.css">
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
+
 <body>
 
-<nav>
-    <a href="booksearch.html">Home</a>
-    <a href="bookshelf.html">My Bookshelf</a>
-</nav>
+    <header class="hero">
+        <h1>My Bookshelf</h1>
+        <p>A collection of selected books from Open Library</p>
+    </header>
 
-<h1>My Bookshelf</h1>
+    <nav class="navbar">
+        <a href="booksearch.html">Home</a>
+        <a href="bookshelf.html">My Bookshelf</a>
+    </nav>
 
-<div id="bookshelf"></div>
+    <main class="content">
 
-<script>
+        <section>
 
-const myBooks = [
+            <h2>Favorite Books</h2>
 
-    "OL17308344W",
-    "OL21572859W",
-    "OL22297316W",
-    "OL27708692W",
-    "OL16804365W"
+            <div id="bookshelf">
 
-];
-
-myBooks.forEach(function(workId){
-
-    $.getJSON(
-        `https://openlibrary.org/works/${workId}.json`,
-
-        function(book){
-
-            let cover = "";
-
-            if(book.covers &&
-               book.covers.length > 0){
-
-               cover =
-               `<img src="https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg"
-                r">`;
-            }
-
-            $("#bookshelf").append(`
-
-            <div class="book-card">
-
-                ${cover}
-
-                <h2>
-                    <a href="bookdetails.html?workId=${workId}">
-                        ${book.title}
-                    </a>
-                </h2>
+                <div class="message">
+                    Loading bookshelf...
+                </div>
 
             </div>
 
-            `);
+        </section>
 
-        }
+    </main>
 
-    );
+    <footer>
+        <p>&copy; 2026 Khaliya Ross – IT 4403</p>
+    </footer>
 
-});
+    <script>
 
-</script>
+        const myBooks = [
+
+            "OL17308344W",
+            "OL21572859W",
+            "OL22297316W",
+            "OL27708692W",
+            "OL16804365W"
+
+        ];
+
+        $("#bookshelf").empty();
+
+        myBooks.forEach(function(workId) {
+
+            $.getJSON(
+                `https://openlibrary.org/works/${workId}.json`
+            )
+
+            .done(function(book) {
+
+                let cover = `
+                    <div class="message">
+                        No Cover Available
+                    </div>
+                `;
+
+                if (book.covers &&
+                    book.covers.length > 0) {
+
+                    cover = `
+                        <img
+                            src="https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg"
+                            alt="Cover image for ${book.title}">
+                    `;
+                }
+
+                $("#bookshelf").append(`
+
+                    <div class="book-card">
+
+                        ${cover}
+
+                        <h3>
+                            <a href="bookdetails.html?workId=${workId}">
+                                ${book.title}
+                            </a>
+                        </h3>
+
+                    </div>
+
+                `);
+
+            })
+
+            .fail(function() {
+
+                $("#bookshelf").append(`
+
+                    <div class="message">
+
+                        Unable to load book with Work ID:
+                        ${workId}
+
+                    </div>
+
+                `);
+
+            });
+
+        });
+
+    </script>
 
 </body>
+
 </html>
