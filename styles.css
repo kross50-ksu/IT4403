@@ -17,8 +17,8 @@ body {
 }
 
 img {
-    width: 300px;
-    height: 200px;
+    max-width: 100%;
+    height: auto;
 }
 .hero h1 {
     font-size: 2.8rem;
@@ -85,3 +85,106 @@ footer {
     color: #333333;
     border-top: 1px solid #e0e0e0;
 }
+/* Search Bar */
+
+.search-container {
+    margin-bottom: 2rem;
+}
+
+.search-container input[type="text"] {
+    padding: 0.75rem;
+    width: 60%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+.search-container button {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #003366;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #0055a5;
+}
+
+/* Pagination */
+
+.pagination {
+    margin: 1rem 0;
+}
+
+.pagination select {
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+/* Book Cards */
+
+.book-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    border: 1px solid #e6e6e6;
+}
+
+.book-card h3 {
+    margin-top: 0;
+    color: #003366;
+}
+
+.book-card a {
+    color: #003366;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.book-card a:hover {
+    color: #0055a5;
+    text-decoration: underline;
+}
+
+/* Bookshelf Layout */
+
+.bookshelf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.bookshelf-grid .book-card {
+    text-align: center;
+}
+
+/* Book Details */
+
+.details-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.details-card img {
+    width: 250px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+/* Messages */
+
+.message {
+    background: #eef3f8;
+    border-left: 4px solid #003366;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
