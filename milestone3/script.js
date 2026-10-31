@@ -277,9 +277,17 @@ function displayCollection(collectionBooks) {
     collectionBooks.forEach(book => {
 
         const cover =
-            book.cover_id
-                ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
-                : NO_COVER;
+        book.cover_id
+        ? `<img
+                src="https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg"
+                alt="${book.title}"
+                class="book-cover"
+           >`
+        : `<img
+                src="${NO_COVER}"
+                alt="No Cover Available"
+                class="book-cover"
+           >`;
 
         const authors =
             book.authors
@@ -287,15 +295,15 @@ function displayCollection(collectionBooks) {
                 : "Unknown Author";
 
         $("#collectionContainer").append(`
-            <div class="book-card"
-                 data-work="${book.key}"
-                 data-author="${authors}">
+    <div class="book-card"
+         data-work="${book.key}"
+         data-author="${authors}">
 
-                ${cover}
+        ${cover}
 
-                <p>${book.title}</p>
+        <p>${book.title}</p>
 
-            </div>
-        `);
+    </div>
+`);
     });
 }
