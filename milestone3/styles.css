@@ -1,0 +1,233 @@
+/* ===== GENERAL PAGE STYLING ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* ===== HEADER ===== */
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* ===== CARD SECTIONS ===== */
+
+.card {
+    background: white;
+    margin-bottom: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.10);
+}
+
+.card h2 {
+    color: #003366;
+    border-bottom: 2px solid #003366;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+/* ===== SEARCH ===== */
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#searchTerm {
+    width: 400px;
+    max-width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+/* ===== BUTTONS ===== */
+
+button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .3s ease;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.activePage {
+    background-color: #28a745;
+}
+
+/* ===== STATUS MESSAGE ===== */
+
+#statusMessage {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #cc0000;
+}
+
+/* ===== RESULTS & COLLECTION GRID ===== */
+
+#resultsContainer,
+#collectionContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 15px;
+}
+
+/* ===== BOOK CARDS ===== */
+
+.book-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.book-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.book-card img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.book-card p {
+    margin-top: 10px;
+    font-size: .95rem;
+    font-weight: bold;
+}
+
+/* ===== PAGINATION ===== */
+
+#paginationSection {
+    text-align: center;
+}
+
+#pagination {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#pageIndicator {
+    text-align: center;
+    font-weight: bold;
+    color: #003366;
+}
+
+/* ===== BOOK DETAILS ===== */
+
+#bookDetails {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+#bookDetails img {
+    width: 250px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.detail-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.detail-text h3 {
+    color: #003366;
+    margin-bottom: 15px;
+}
+
+.detail-text p {
+    margin-bottom: 15px;
+}
+
+.detail-text a {
+    color: #0056b3;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.detail-text a:hover {
+    text-decoration: underline;
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #777;
+    font-size: .9rem;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+    }
+
+    #searchTerm {
+        width: 100%;
+    }
+
+    #bookDetails {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #bookDetails img {
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .detail-text {
+        min-width: unset;
+    }
+}
