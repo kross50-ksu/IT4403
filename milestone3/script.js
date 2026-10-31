@@ -80,10 +80,19 @@ function renderResults() {
 
     currentBooks.forEach(book => {
 
-        const coverURL =
-            book.cover_i
-                ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-                : NO_COVER;
+        $("#resultsContainer").append(`
+    <div class="book-card"
+         data-work="${book.key}"
+         data-author="${book.author_name ? book.author_name.join(", ") : "Unknown Author"}">
+
+        <img src="${coverURL}"
+             alt="${book.title}"
+             class="book-cover">
+
+        <p>${book.title}</p>
+
+    </div>
+`);
 
         $("#resultsContainer").append(`
             <div class="book-card"
@@ -235,11 +244,15 @@ function renderDetails(book, authors) {
                 .join(", ")
             : "No subjects available.";
 
-    const coverURL =
-        book.covers &&
-        book.covers.length > 0
-            ? `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
-            : NO_COVER;
+    $("#bookDetails").html(`
+    <img src="${coverURL}"
+         alt="${book.title}"
+         class="detail-cover">
+
+    <div class="detail-text">
+        ...
+    </div>
+`);
 
     $("#bookDetails").html(`
 
@@ -305,9 +318,23 @@ function displayCollection(collectionBooks) {
     collectionBooks.forEach(book => {
 
         const coverURL =
-            book.cover_id
-                ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
-                : NO_COVER;
+    book.cover_id
+        ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
+        : NO_COVER;
+
+$("#collectionContainer").append(`
+    <div class="book-card"
+         data-work="${book.key}"
+         data-author="${authors}">
+
+        <img src="${coverURL}"
+             alt="${book.title}"
+             class="book-cover">
+
+        <p>${book.title}</p>
+
+    </div>
+`);
 
         const authors =
             book.authors
