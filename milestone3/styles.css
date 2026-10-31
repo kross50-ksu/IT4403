@@ -230,4 +230,16 @@ footer {
     .detail-text {
         min-width: unset;
     }
+    #paginationArea {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#pagination {
+    margin-bottom: 10px;
+}
+
+#pageIndicator {
+    font-weight: bold;
+    color: #003366;
 }
