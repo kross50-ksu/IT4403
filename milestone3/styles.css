@@ -1,10 +1,12 @@
-/* ===== GENERAL PAGE STYLING ===== */
+/* ===== RESET ===== */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/* ===== PAGE ===== */
 
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -28,24 +30,23 @@ header h1 {
 
 .subtitle {
     color: #666;
-    font-size: 1rem;
 }
 
-/* ===== CARD SECTIONS ===== */
+/* ===== CARDS ===== */
 
 .card {
-    background: white;
-    margin-bottom: 25px;
+    background: #fff;
+    border-radius: 12px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.10);
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .card h2 {
     color: #003366;
+    margin-bottom: 15px;
     border-bottom: 2px solid #003366;
     padding-bottom: 8px;
-    margin-bottom: 15px;
 }
 
 /* ===== SEARCH ===== */
@@ -71,12 +72,11 @@ header h1 {
 button {
     background-color: #003366;
     color: white;
-    border: none;
     padding: 12px 20px;
+    border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: .3s ease;
-    font-size: 1rem;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -84,7 +84,7 @@ button:hover {
 }
 
 button:disabled {
-    background-color: gray;
+    background-color: #888;
     cursor: not-allowed;
 }
 
@@ -92,39 +92,39 @@ button:disabled {
     background-color: #28a745;
 }
 
-/* ===== STATUS MESSAGE ===== */
+/* ===== STATUS ===== */
 
 #statusMessage {
     margin-top: 15px;
     text-align: center;
-    font-weight: bold;
     color: #cc0000;
+    font-weight: bold;
 }
 
-/* ===== RESULTS & COLLECTION GRID ===== */
+/* ===== GRIDS ===== */
 
-#resultsContainer,
-#collectionContainer {
+#collectionContainer,
+#resultsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
 }
 
 /* ===== BOOK CARDS ===== */
 
 .book-card {
     background: white;
-    border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 12px;
+    border: 1px solid #ddd;
+    padding: 15px;
     text-align: center;
     cursor: pointer;
-    transition: .3s;
+    transition: all 0.25s ease;
 }
 
 .book-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
 }
 
 .book-card img {
@@ -132,11 +132,11 @@ button:disabled {
     height: 180px;
     object-fit: cover;
     border-radius: 6px;
+    margin-bottom: 10px;
 }
 
 .book-card p {
-    margin-top: 10px;
-    font-size: .95rem;
+    font-size: 0.95rem;
     font-weight: bold;
 }
 
@@ -144,37 +144,40 @@ button:disabled {
 
 #paginationSection {
     text-align: center;
+    margin-top: 20px;
 }
 
 #pagination {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: 10px;
 }
 
 #pageIndicator {
-    text-align: center;
-    font-weight: bold;
     color: #003366;
+    font-weight: bold;
 }
 
-/* ===== BOOK DETAILS ===== */
+/* ===== DETAILS ===== */
 
 #bookDetails {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     flex-wrap: wrap;
-    align-items: flex-start;
 }
 
 #bookDetails img {
     width: 250px;
+    max-width: 100%;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
 }
 
 .detail-text {
     flex: 1;
-    min-width: 300px;
+    min-width: 280px;
 }
 
 .detail-text h3 {
@@ -186,10 +189,14 @@ button:disabled {
     margin-bottom: 15px;
 }
 
+.detail-text strong {
+    color: #003366;
+}
+
 .detail-text a {
     color: #0056b3;
-    font-weight: bold;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .detail-text a:hover {
@@ -202,7 +209,6 @@ footer {
     text-align: center;
     margin-top: 30px;
     color: #777;
-    font-size: .9rem;
 }
 
 /* ===== MOBILE ===== */
@@ -213,33 +219,20 @@ footer {
         padding: 10px;
     }
 
-    #searchTerm {
-        width: 100%;
-    }
-
     #bookDetails {
         flex-direction: column;
-        text-align: center;
+        align-items: center;
     }
 
     #bookDetails img {
         width: 200px;
-        margin: 0 auto;
     }
 
     .detail-text {
-        min-width: unset;
+        text-align: center;
     }
-    #paginationArea {
-    margin-top: 20px;
-    text-align: center;
-}
 
-#pagination {
-    margin-bottom: 10px;
-}
-
-#pageIndicator {
-    font-weight: bold;
-    color: #003366;
+    #searchTerm {
+        width: 100%;
+    }
 }
