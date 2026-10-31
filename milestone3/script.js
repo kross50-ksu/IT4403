@@ -1,63 +1,48 @@
-// =============================
-// Global Variables
-// =============================
-
 let books = [];
 let currentPage = 1;
-const resultsPerPage = 10;
 
+const RESULTS_PER_PAGE = 10;
 const detailCache = {};
 
 const NO_COVER =
     "https://via.placeholder.com/120x180?text=No+Cover";
 
-// =============================
-// Document Ready
-// =============================
-
 $(document).ready(function () {
 
     loadCollection();
 
-    $("#btnSearch").on("click", searchBooks);
+    $("#btnSearch").click(searchBooks);
 
-    $("#searchTerm").on("keypress", function (e) {
-
+    $("#searchTerm").keypress(function (e) {
         if (e.which === 13) {
             searchBooks();
         }
-
     });
-
 });
-
-// =============================
-// Search Books
-// =============================
 
 function searchBooks() {
 
-    const searchTerm = $("#searchTerm")
+    const term = $("#searchTerm")
         .val()
         .trim();
 
-    if (searchTerm === "") {
+    if (term === "") {
 
-        $("#statusMessage").text(
-            "Please enter a search term."
-        );
+        $("#statusMessage")
+            .text("Please enter a search term.");
 
         return;
     }
 
-    $("#statusMessage").text("Loading books...");
+    $("#statusMessage")
+        .text("Loading books...");
 
-    $("#btnSearch").prop("disabled", true);
+    $("#btnSearch")
+        .prop("disabled", true);
 
     $.ajax({
 
-        url:
-            `https://openlibrary.org/search.json?q=${encodeURIComponent(searchTerm)}`,
+        url: `https://openlibrary.org/search.json?q=${encodeURIComponent(term)}`,
 
         method: "GET",
 
@@ -69,9 +54,8 @@ function searchBooks() {
 
             if (books.length === 0) {
 
-                $("#resultsContainer").html(
-                    "<p>No books found.</p>"
-                );
+                $("#resultsContainer")
+                    .html("<p>No matching books found.</p>");
 
                 $("#pagination").empty();
                 $("#pageIndicator").empty();
@@ -83,40 +67,31 @@ function searchBooks() {
             buildPagination();
 
             $("#statusMessage").text("");
-
         },
 
         error: function () {
 
-            $("#statusMessage").text(
-                "Unable to retrieve search results."
-            );
-
+            $("#statusMessage")
+                .text("Unable to search books.");
         },
 
         complete: function () {
-
-            $("#btnSearch").prop("disabled", false);
-
+            $("#btnSearch")
+                .prop("disabled", false);
         }
-
     });
-
 }
-
-// =============================
-// Render Search Results
-// =============================
 
 function renderResults() {
 
     $("#resultsContainer").empty();
 
     const start =
-        (currentPage - 1) * resultsPerPage;
+        (currentPage - 1)
+        * RESULTS_PER_PAGE;
 
     const end =
-        start + resultsPerPage;
+        start + RESULTS_PER_PAGE;
 
     const currentBooks =
         books.slice(start, end);
@@ -128,59 +103,44 @@ function renderResults() {
                 ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
                 : NO_COVER;
 
-        const card = `
+        $("#resultsContainer").append(`
+
             <div class="book-card"
                  data-work="${book.key}"
                  data-author="${book.author_name ? book.author_name.join(', ') : 'Unknown Author'}">
 
-                <img src="${coverURL}"
-                     alt="${book.title}">
+                <img src="${coverURL}" alt="${book.title}">
 
                 <p>${book.title}</p>
 
             </div>
-        `;
 
-        $("#resultsContainer").append(card);
-
+        `);
     });
 
     updatePageIndicator();
-
 }
-
-// =============================
-// Build Pagination
-// =============================
 
 function buildPagination() {
 
     $("#pagination").empty();
 
     const totalPages =
-        Math.ceil(
-            books.length / resultsPerPage
-        );
+        Math.ceil(books.length / RESULTS_PER_PAGE);
 
     for (let i = 1; i <= totalPages; i++) {
 
-        const button = $(`
+        $("#pagination").append(`
+
             <button
                 class="pageBtn ${i === currentPage ? 'activePage' : ''}"
                 data-page="${i}">
                 ${i}
             </button>
+
         `);
-
-        $("#pagination").append(button);
-
     }
-
 }
-
-// =============================
-// Pagination Click
-// =============================
 
 $(document).on(
     "click",
@@ -188,263 +148,156 @@ $(document).on(
     function () {
 
         currentPage =
-            parseInt(
-                $(this).data("page")
-            );
+            parseInt($(this).data("page"));
 
         renderResults();
         buildPagination();
-
     }
 );
-
-// =============================
-// Page Indicator
-// =============================
 
 function updatePageIndicator() {
 
     const totalPages =
-        Math.ceil(
-            books.length / resultsPerPage
-        );
+        Math.ceil(books.length / RESULTS_PER_PAGE);
 
     $("#pageIndicator").text(
         `Page ${currentPage} of ${totalPages}`
     );
-
 }
-
-// =============================
-// Book Click
-// =============================
 
 $(document).on(
     "click",
     ".book-card",
     function () {
 
-        const workKey =
+        const workID =
             $(this).data("work");
 
-        const author =
+        const authors =
             $(this).data("author");
 
-        getBookDetails(
-            workKey,
-            author
-        );
-
+        getBookDetails(workID, authors);
     }
 );
 
-// =============================
-// Get Book Details
-// =============================
+function getBookDetails(workID, authors) {
 
-function getBookDetails(
-    workKey,
-    authorNames
-) {
-
-    if (detailCache[workKey]) {
+    if (detailCache[workID]) {
 
         renderDetails(
-            detailCache[workKey],
-            authorNames
+            detailCache[workID],
+            authors
         );
 
         return;
     }
 
-    $("#bookDetails").html(
-        "<p>Loading details...</p>"
-    );
+    $("#bookDetails")
+        .html("<p>Loading details...</p>");
 
     $.ajax({
 
-        url: `https://openlibrary.org${workKey}.json`,
+        url: `https://openlibrary.org${workID}.json`,
 
         method: "GET",
 
         success: function (data) {
 
-            detailCache[workKey] = data;
+            detailCache[workID] = data;
 
-            renderDetails(
-                data,
-                authorNames
-            );
-
+            renderDetails(data, authors);
         },
 
         error: function () {
 
-            $("#bookDetails").html(
-                "<p>Unable to load book details.</p>"
-            );
-
+            $("#bookDetails")
+                .html("<p>Unable to load details.</p>");
         }
-
     });
-
 }
 
-// =============================
-// Render Details
-// =============================
-
-function renderDetails(
-    book,
-    authorNames
-) {
+function renderDetails(book, authors) {
 
     let description =
-        "Description not available.";
+        "No description available.";
 
-    if (
-        typeof book.description ===
-        "string"
-    ) {
+    if (typeof book.description === "string") {
 
         description =
             book.description;
-
     }
 
     if (
-        typeof book.description ===
-        "object" &&
+        typeof book.description === "object" &&
         book.description !== null
     ) {
 
-        description =
-            book.description.value ||
-            "Description not available.";
+        descriptionvalue ||
+            "No description available.";
     }
 
-    let subjects =
-        "Subjects unavailable.";
+    const subjects =
+        book.subjects
+            ? book.subjects.slice(0, 10).join(", ")
+            : "No subjects available.";
 
-    if (
-        book.subjects &&
-        book.subjects.length > 0
-    ) {
-
-        subjects =
-            book.subjects
-                .slice(0, 10)
-                .join(", ");
-
-    }
-
-    let coverURL =
-        NO_COVER;
-
-    if (
-        book.covers &&
-        book.covers.length > 0
-    ) {
-
-        coverURL =
-            `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`;
-
-    }
+    const coverURL =
+        book.covers && book.covers.length > 0
+            ? `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
+            : NO_COVER;
 
     $("#bookDetails").html(`
 
-        <img
-            src="${coverURL}"
-            alt="${book.title}">
+        ${coverURL}
 
         <div class="detail-text">
 
             <h3>${book.title}</h3>
 
-            <p>
-                <strong>Work ID:</strong>
-                ${book.key}
-            </p>
+            <p><strong>Work ID:</strong> ${book.key}</p>
 
-            <p>
-                <strong>Author(s):</strong>
-   n:</strong><br>
-                ${description}
-            </p>
+            <p><strong>Author(s):</strong> ${authors}</p>
 
-            <p>
-                <strong>Subjects:</strong><br>
-                ${subjects}
-            </p>
+            <p><strong>Description:</strong><br>${description}</p>
+
+            <p><strong>Subjects:</strong><br>${subjects}</p>
 
             <p>
                 https://openlibrary.org${book.key}
-                    View on Open Library
+                   View on Open Library
                 </a>
             </p>
 
         </div>
 
     `);
-
 }
 
-// =============================
-// Load Featured Collection
-// =============================
-
 function loadCollection() {
-
-    $("#collectionContainer").html(
-        "<p>Loading collection...</p>"
-    );
 
     $.ajax({
 
         url:
-            "https://openlibrary.org/subjects/fantasy.json?limit=10",
+        "https://openlibrary.org/subjects/fantasy.json?limit=10",
 
         method: "GET",
 
         success: function (data) {
 
-            displayCollection(
-                data.works
-            );
-
+            displayCollection(data.works);
         },
 
         error: function () {
 
-            $("#collectionContainer").html(
-                "<p>Collection unavailable.</p>"
-            );
-
+            $("#collectionContainer")
+                .html("<p>Collection unavailable.</p>");
         }
-
     });
-
 }
-
-// =============================
-// Display Collection
-// =============================
 
 function displayCollection(collectionBooks) {
 
     $("#collectionContainer").empty();
-
-    if (
-        !collectionBooks ||
-        collectionBooks.length === 0
-    ) {
-
-        $("#collectionContainer").html(
-            "<p>No collection available.</p>"
-        );
-
-        return;
-    }
 
     collectionBooks.forEach(book => {
 
@@ -455,12 +308,11 @@ function displayCollection(collectionBooks) {
 
         const authors =
             book.authors
-                ? book.authors
-                      .map(author => author.name)
-                      .join(", ")
+                ? book.authors.map(a => a.name).join(", ")
                 : "Unknown Author";
 
-        const card = `
+        $("#collectionContainer").append(`
+
             <div class="book-card"
                  data-work="${book.key}"
                  data-author="${authors}">
@@ -470,11 +322,7 @@ function displayCollection(collectionBooks) {
                 <p>${book.title}</p>
 
             </div>
-        `;
 
-        $("#collectionContainer")
-            .append(card);
-
+        `);
     });
-
 }
