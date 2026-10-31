@@ -39,9 +39,7 @@ function searchBooks() {
             currentPage = 1;
 
             if (books.length === 0) {
-                $("#resultsContainer").html(
-                    "<p>No matching books found.</p>"
-                );
+                $("#resultsContainer").html("<p>No matching books found.</p>");
                 $("#pagination").empty();
                 $("#pageIndicator").empty();
                 return;
@@ -49,14 +47,11 @@ function searchBooks() {
 
             renderResults();
             buildPagination();
-
             $("#statusMessage").text("");
         },
 
         error: function () {
-            $("#statusMessage").text(
-                "Unable to search books."
-            );
+            $("#statusMessage").text("Unable to search books.");
         },
 
         complete: function () {
@@ -68,18 +63,12 @@ function searchBooks() {
 function renderResults() {
     $("#resultsContainer").empty();
 
-    const start =
-        (currentPage - 1) * RESULTS_PER_PAGE;
+    const start = (currentPage - 1) * RESULTS_PER_PAGE;
+    const end = start + RESULTS_PER_PAGE;
 
-    const end =
-        start + RESULTS_PER_PAGE;
+    books.slice(start, end).forEach(book => {
 
-    const currentBooks =
-        books.slice(start, end);
-
-    currentBooks.forEach(book => {
-
-        const coverURL =
+        const cover =
             book.cover_i
                 ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
                 : NO_COVER;
@@ -93,11 +82,10 @@ function renderResults() {
             <div class="book-card"
                  data-work="${book.key}"
                  data-author="${authors}">
-
-                <img
-                    class="book-cover"
-                    src="${coverURL}"
-                    alt="${book.title}">
+                 
+                <img src="${cover}"
+                     alt="${book.title}"
+                     loading="lazy">
 
                 <p>${book.title}</p>
 
@@ -109,17 +97,14 @@ function renderResults() {
 }
 
 function buildPagination() {
-
     $("#pagination").empty();
 
     const totalPages =
         Math.ceil(
-            books.length /
-            RESULTS_PER_PAGE
+            books.length / RESULTS_PER_PAGE
         );
 
     for (let i = 1; i <= totalPages; i++) {
-
         $("#pagination").append(`
             <button
                 class="pageBtn ${i === currentPage ? "activePage" : ""}"
@@ -130,31 +115,30 @@ function buildPagination() {
     }
 }
 
-$(document).on(
-    "click",
-    ".pageBtn",
-    function () {
-
-        currentPage =
-            parseInt($(this).data("page"));
-
-        renderResults();
-        buildPagination();
-    }
-);
-
 function updatePageIndicator() {
-
     const totalPages =
         Math.ceil(
-            books.length /
-            RESULTS_PER_PAGE
+            books.length / RESULTS_PER_PAGE
         );
 
     $("#pageIndicator").text(
         `Page ${currentPage} of ${totalPages}`
     );
 }
+
+$(document).on(
+    "click",
+    ".pageBtn",
+    function () {
+        currentPage =
+            parseInt(
+                $(this).data("page")
+            );
+
+        renderResults();
+        buildPagination();
+    }
+);
 
 $(document).on(
     "click",
@@ -167,7 +151,10 @@ $(document).on(
         const authors =
             $(this).data("author");
 
-        getBookDetails(workID, authors);
+        getBookDetails(
+            workID,
+            authors
+        );
     }
 );
 
@@ -181,18 +168,15 @@ function getBookDetails(workID, authors) {
         return;
     }
 
-    $("#bookDetails").html(
-        "<p>Loading details...</p>"
-    );
+    $("#bookDetails")
+        .html("<p>Loading details...</p>");
 
     $.ajax({
         url: `https://openlibrary.org${workID}.json`,
         method: "GET",
 
         success: function (data) {
-
             detailCache[workID] = data;
-
             renderDetails(
                 data,
                 authors
@@ -200,10 +184,8 @@ function getBookDetails(workID, authors) {
         },
 
         error: function () {
-
-            $("#bookDetails").html(
-                "<p>Unable to load details.</p>"
-            );
+            $("#bookDetails")
+                .html("<p>Unable to load details.</p>");
         }
     });
 }
@@ -213,18 +195,15 @@ function renderDetails(book, authors) {
     let description =
         "No description available.";
 
-    if (typeof book.description === "string") {
-
-        description =
-            book.description;
-
+    if (
+        typeof book.description === "string"
+    ) {
+        description = book.description;
     } else if (
         book.description &&
         book.description.value
     ) {
-
-        description =
-            book.description.value;
+        description = book.description.value;
     }
 
     const subjects =
@@ -234,42 +213,40 @@ function renderDetails(book, authors) {
                   .join(", ")
             : "No subjects available.";
 
-    const coverURL =
+    const cover =
         book.covers &&
         book.covers.length > 0
             ? `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
             : NO_COVER;
 
     $("#bookDetails").html(`
-        <div class="detail-container">
+        <img src="${cover}"
+             alt="${book.title}">
 
-            <img
-                class="detail-cover"
-                src="${coverURL}"
-                alt="${book.title}">
+        <div class="detail-text">
 
-            <div class="detail-text">
+            <h3>${book.title}</h3>
 
-                <h3>${book.title}</h3>
+            <p>
+                <strong>Work ID:</strong>
+                ${book.key}
+            </p>
 
-                <p>
-                    <strong>Work ID:</strong>
-                    ${book.key}
-                         ${description}
-                </p>
+            <p>
+                <strong>Author(s):</strong>
+                ${authors}
+            </p>
 
-                <p>
-                    <strong>Subjects:</strong><br>
-                    ${subjects}
-                </p>
+            <p>
+                <trong><br>
+                ${subjects}
+            </p>
 
-                <p>
-                    https://openlibrary.org${book.key}
-                        View on Open Library
-                    </a>
-                </p>
-
-            </div>
+            <p>
+                https://openlibrary.org${book.key}
+                   View on Open Library
+                </a>
+            </p>
 
         </div>
     `);
@@ -299,7 +276,7 @@ function displayCollection(collectionBooks) {
 
     collectionBooks.forEach(book => {
 
-        const coverURL =
+        const cover =
             book.cover_id
                 ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
                 : NO_COVER;
@@ -314,7 +291,7 @@ function displayCollection(collectionBooks) {
                  data-work="${book.key}"
                  data-author="${authors}">
 
-                ${coverURL}
+                ${cover}
 
                 <p>${book.title}</p>
 
