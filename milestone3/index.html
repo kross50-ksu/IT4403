@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Library SPA - Milestone 3</title>
+
+    css/styles.css
+
+    https://code.jquery.com/jquery-3.7.1.min.jsscript>
+    js/script.jsscript>
+</head>
+
+<body>
+
+    <header>
+        <h1>Open Library Single Page Application</h1>
+        <p class="subtitle">
+            Search books, view details, and explore a featured collection.
+        </p>
+    </header>
+
+    <!-- SEARCH -->
+    <section class="card">
+        <h2>Book Search</h2>
+
+        <div class="search-container">
+
+            <input
+                type="text"
+                id="searchTerm"
+                placeholder="Enter a title or keyword">
+
+            <button id="btnSearch">
+                Search
+            </button>
+
+        </div>
+
+        <p id="statusMessage"></p>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="card">
+        <h2>Search Results</h2>
+
+        <div id="resultsContainer">
+            Search for a book to begin.
+        </div>
+    </section>
+
+    <!-- PAGINATION -->
+    <section class="card">
+        <h2>Results Navigation</h2>
+
+        <div id="pagination"></div>
+
+        <div id="pageIndicator"></div>
+    </section>
+
+    <!-- DETAILS -->
+    <section class="card">
+        <h2>Book Details</h2>
+
+        <div id="bookDetails">
+
+            <p>Select a book from the search results or collection.</p>
+
+        </div>
+    </section>
+
+    <!-- COLLECTION -->
+    <section class="card">
+        <h2>Featured Fantasy Collection</h2>
+
+        <div id="collectionContainer">
+
+            Loading collection...
+
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            IT4403 - Milestone 3 |
+            Open Library Data
+        </p>
+    </footer>
+
+</body>
+
+</html>
