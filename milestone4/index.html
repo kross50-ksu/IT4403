@@ -93,27 +93,31 @@
 
     <img src="{{cover}}" alt="{{title}}">
 
-    <h2>{{title}}</h2>
+    <div class="details-info">
 
-    <p><strong>Work ID:</strong> {{workId}}</p>
+        <h2>{{title}}</h2>
 
-    <p><strong>Authors:</strong> {{authors}}</p>
+        <p><strong>Work ID:</strong> {{workId}}</p>
 
-    <p><strong>Description:</strong> {{description}}</p>
+        <p><strong>Authors:</strong> {{authors}}</p>
 
-    <p><strong>Language:</strong> {{language}}</p>
+        <p><strong>Description:</strong> {{description}}</p>
 
-    <h3>Subjects</h3>
+        <p><strong>Language:</strong> {{language}}</p>
 
-    <ul>
-        {{#subjects}}
-        <li>{{.}}</li>
-        {{/subjects}}
-    </ul>
+        <p><strong>Subjects:</strong></p>
 
-    <a href="{{link}}" target="_blank">
-        View on Open Library
-    </a>
+        <ul>
+            {{#subjects}}
+            <li>{{.}}</li>
+            {{/subjects}}
+        </ul>
+
+        <a href="{{link}}" target="_blank">
+            View on Open Library
+        </a>
+
+    </div>
 
 </div>
 </script>
